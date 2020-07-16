@@ -13,9 +13,10 @@ function [success, fileinfo] = ksopt(overwrite, nobuild)
 		nobuild = false;
 	end
 	filename = 'ksopt_optimize';
-	file		= realpath(fullfile(compile.destpath(), 'pyKSOPT', filename));
+	destpath = realpath(fullfile(mfilename('fullpath'), '..', '..'));
+	file		= realpath(fullfile(destpath, 'pyKSOPT', filename));
 	makePfad	= realpath(fullfile(compile.buildpath(), 'pyKSOPT', filename));
-	resultfile	= realpath(fullfile(compile.destpath(), filename));
+	resultfile	= realpath(fullfile(destpath, filename));
 	if nargout >= 2
 		fileinfo = struct(...
 			'm',		'',...
@@ -29,7 +30,7 @@ function [success, fileinfo] = ksopt(overwrite, nobuild)
 		return;
 	end
 
-	f2clib_dir = realpath(fullfile(compile.destpath(), 'pyKSOPT', 'libf2c'));
+	f2clib_dir = realpath(fullfile(destpath, 'pyKSOPT', 'libf2c'));
 
 	config = compile.constant();
 	if strcmpi(config.TargetLang, 'C++')
