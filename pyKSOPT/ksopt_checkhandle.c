@@ -36,15 +36,15 @@ static int eval_constraint(const mxArray *functionhandle, const mxArray *x, cons
 
 int ksopt_checkhandle(const mxArray *functionhandle, const mxArray *x, const KSOPT_functionType type, KSOPT_functionHandleInformation *info) {
 	/*
-	 *KSOPT_CHECKHANDLE check function handle for validity to use with KSOPT and throw matlab error if invalid
-	 *	Input:
-	 *		functionhandle:	mxArray of a function handle to check for validity
-	 *		x:				optimization value to test function at
-	 *		type:			type of function the function handle should be used for (objective function, constraint function, iteration function)
-	 *	Output:
-	 *		info:			structure with information about function handle and its return values (dimensions, gradient information, etc.)
-	 *		exitflag:		zero if checks passed else nonzero
-	 */
+	*KSOPT_CHECKHANDLE check function handle for validity to use with KSOPT and throw matlab error if invalid
+	*	Input:
+	*		functionhandle:	mxArray of a function handle to check for validity
+	*		x:				optimization value to test function at
+	*		type:			type of function the function handle should be used for (objective function, constraint function, iteration function)
+	*	Output:
+	*		info:			structure with information about function handle and its return values (dimensions, gradient information, etc.)
+	*		exitflag:		zero if checks passed else nonzero
+	*/
 	int nargin = 0, nargout = 0;
 	int success = 0;
 	size_t number_variables = 0;
@@ -288,15 +288,15 @@ int ksopt_checkhandle(const mxArray *functionhandle, const mxArray *x, const KSO
 	}
 static int eval_objective(const mxArray *functionhandle, const mxArray *x, const int nargout, objectiveinfo *info) {
 	/*
-	 *EVAL_OBJECTIVE evaluate objective function
-	 *	Input:
-	 *		functionhandle:	function handle to use as objective function
-	 *		x:				optimization value to test function handle at
-	 *		nargout:		number of output arguments of function handle
-	 *	Output:
-	 *		info:			structure with information about objective function return values
-	 *		exitflag:		zero in case of success else nonzero
-	 */
+	*EVAL_OBJECTIVE evaluate objective function
+	*	Input:
+	*		functionhandle:	function handle to use as objective function
+	*		x:				optimization value to test function handle at
+	*		nargout:		number of output arguments of function handle
+	*	Output:
+	*		info:			structure with information about objective function return values
+	*		exitflag:		zero in case of success else nonzero
+	*/
 	int success = 0, ii = 0;
 	size_t number_variables = ((x != NULL) ? mxGetM(x) : 0);
 	mxArray *evalobjectiveargsin[2], *evalobjectiveargsout[2];
@@ -545,15 +545,15 @@ static int eval_objective(const mxArray *functionhandle, const mxArray *x, const
 	}
 static int eval_constraint(const mxArray *functionhandle, const mxArray *x, const int nargout, constraintinfo *info) {
 	/*
-	 *EVAL_CONSTRAINT evaluate constraint function
-	 *	Input:
-	 *		functionhandle:	function handle to use as constraint function
-	 *		x:				optimization value to test function handle at
-	 *		nargout:		number of output arguments of function handle
-	 *	Output:
-	 *		info:			structure with information about constraint function return values
-	 *		exitflag:		zero in case of success else nonzero
-	 */
+	*EVAL_CONSTRAINT evaluate constraint function
+	*	Input:
+	*		functionhandle:	function handle to use as constraint function
+	*		x:				optimization value to test function handle at
+	*		nargout:		number of output arguments of function handle
+	*	Output:
+	*		info:			structure with information about constraint function return values
+	*		exitflag:		zero in case of success else nonzero
+	*/
 	int success = 0, ii = 0;
 	unsigned int maxnargout = 4;
 	boolean_T hasarg_ineq = false, hasarg_eq = false, hasarg_ineq_grad = false, hasarg_eq_grad = false;

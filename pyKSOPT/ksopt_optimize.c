@@ -1,17 +1,17 @@
 /* KSOPT_OPTIMIZE - A MATLAB MEX Interface for KSOPT
- * Institute for Automatic Control
- * Control and Mechatronics Lab
- * Technical University Darmstadt
- * Patrick Vogt
- *
- * Based on:
- * NLOPTMEX - A MATLAB MEX Interface to NLOPT
- * Released Under the BSD 3-Clause License:
- * https://www.inverseproblem.co.nz/OPTI/index.php/DL/License
- *
- * Copyright (C) Jonathan Currie 2013
- * www.inverseproblem.co.nz
- */
+* Institute for Automatic Control
+* Control and Mechatronics Lab
+* Technical University Darmstadt
+* Patrick Vogt
+*
+* Based on:
+* NLOPTMEX - A MATLAB MEX Interface to NLOPT
+* Released Under the BSD 3-Clause License:
+* https://www.inverseproblem.co.nz/OPTI/index.php/DL/License
+*
+* Copyright (C) Jonathan Currie 2013
+* www.inverseproblem.co.nz
+*/
 
 /* Based in parts on nlopt_optimize-mex.c supplied with NLOPT */
 #define DEBUG_FLAG 0
@@ -96,85 +96,85 @@ typedef struct {
 //Function Prototypes
 static void printSolverInfo(void);
 /*CHECKINPUTS check input arguments supplied in matlab
- *	Input:
- *		prhs:							array with mxArrays supplied by user in matlab
- *		nrhs:							number of supplied arguments in matlab
- *	Output:
- *		options:						structure with options for optimization with KSOPT
- *		objectiveinformation:			structure with inforamtion about objective function
- *		constraintinformation:			structure with information about constraint function
- *		number_objectives:				number of objective functions
- *		number_constraints_ineq:		number of inequality constraints
- *		number_constraints_eq:			number of equality constraints
- *		number_constraints_linear_ineq:	number of linear inequality constraints
- *		number_constraints_linear_eq:	number of linear equality constraints
- *		iterinfoplot:					structure with information about iteration function
- *		iterinfooutputoptions:			structure with information about output function
- */
+*	Input:
+*		prhs:							array with mxArrays supplied by user in matlab
+*		nrhs:							number of supplied arguments in matlab
+*	Output:
+*		options:						structure with options for optimization with KSOPT
+*		objectiveinformation:			structure with inforamtion about objective function
+*		constraintinformation:			structure with information about constraint function
+*		number_objectives:				number of objective functions
+*		number_constraints_ineq:		number of inequality constraints
+*		number_constraints_eq:			number of equality constraints
+*		number_constraints_linear_ineq:	number of linear inequality constraints
+*		number_constraints_linear_eq:	number of linear equality constraints
+*		iterinfoplot:					structure with information about iteration function
+*		iterinfooutputoptions:			structure with information about output function
+*/
 static void checkInputs(const mxArray *prhs[], const int nrhs, KSOPToptionType *options, KSOPT_functionHandleInformation *objectiveinformation, KSOPT_functionHandleInformation *constraintinformation, size_t *number_objectives, size_t *number_constraints_ineq, size_t *number_constraints_eq, size_t *number_constraints_linear_ineq, size_t *number_constraints_linear_eq, KSOPT_iterfunctionHandleInformation *iterinfoplot, KSOPT_iterfunctionHandleInformation *iterinfooutput);
 /*CHECKIDENTX check if two vectors are the same to handle case when objective and constraints are called with the same input argument for gradient information
- *	Input:
- *		x:	first vector to check
- *		X:	second vector to check
- *		n:	number of elements
- *	Output:
- *		true if vectors are the same else false
- */
+*	Input:
+*		x:	first vector to check
+*		X:	second vector to check
+*		n:	number of elements
+*	Output:
+*		true if vectors are the same else false
+*/
 static bool checkIdentX(const double *x, const double *X, const int n);
 /*CLEARVARIABLES free memory allocated in structures with information about problem structure
- *	Input:
- *		options:						structure with options
- *		iterinformationplot:			structure with information about plotfunction
- *		iterinformationoutput:			structure with information about outputfunction
- *		number_objectives:				number of objectives
- *		number_constraints_ineq:		number of inequality constraints
- *		number_constraints_eq:			number of equality constraints
- *		number_constraints_linear_ineq:	number of linear inequality constraints
- *		number_constraints_linear_eq:	number of linear equality constraints
- */
+*	Input:
+*		options:						structure with options
+*		iterinformationplot:			structure with information about plotfunction
+*		iterinformationoutput:			structure with information about outputfunction
+*		number_objectives:				number of objectives
+*		number_constraints_ineq:		number of inequality constraints
+*		number_constraints_eq:			number of equality constraints
+*		number_constraints_linear_ineq:	number of linear inequality constraints
+*		number_constraints_linear_eq:	number of linear equality constraints
+*/
 static void clearVariables(KSOPToptionType *options, KSOPT_iterfunctionHandleInformation *iterinformationplot, KSOPT_iterfunctionHandleInformation *iterinformationoutput, const size_t number_objectives, const size_t number_constraints_ineq, const size_t number_constraints_eq, const size_t number_constraints_linear_ineq, const size_t number_constraints_linear_eq);
 /*GRADIENT_FUNCTION_WRAPPER wrapper for call to gradient function from within KSOPT
- *	Input:
- *		ndv:							number of optimization variables
- *		nobj:							number of objectives
- *		ncon:							number of constraints
- *		x:								current optimization value
- *	Output:
- *		obj:							current objective function value
- *		g:								current constraint function value
- *		exitstatus:						zero in case of success else nonzero
- */
+*	Input:
+*		ndv:							number of optimization variables
+*		nobj:							number of objectives
+*		ncon:							number of constraints
+*		x:								current optimization value
+*	Output:
+*		obj:							current objective function value
+*		g:								current constraint function value
+*		exitstatus:						zero in case of success else nonzero
+*/
 static int objective_function_wrapper(const int ndv, const int nobj, const int ncon, const double* x, double* obj, double* g);
 /*GRADIENT_FUNCTION_WRAPPER wrapper for call to gradient function from within KSOPT
- *	Input:
- *		ndv:							number of optimization variables
- *		nobj:							number of objectives
- *		ncon:							number of constraints
- *		x:								current optimization value
- *	Output:
- *		obj:							current objective function value
- *		g:								current constraint function value
- *		df:								gradient of current objective function value
- *		dg:								gradient of current constraint function value
- *		exitstatus:						zero in case of success else nonzero
- */
+*	Input:
+*		ndv:							number of optimization variables
+*		nobj:							number of objectives
+*		ncon:							number of constraints
+*		x:								current optimization value
+*	Output:
+*		obj:							current objective function value
+*		g:								current constraint function value
+*		df:								gradient of current objective function value
+*		dg:								gradient of current constraint function value
+*		exitstatus:						zero in case of success else nonzero
+*/
 static int gradient_function_wrapper(const int ndv, const int nobj, const int ncon, const double* x, double* obj, double* g, double* df, double* dg);
 /*ITERATION_FUNCTION_WRAPPER wrapper for call to iteration function from within KSOPT
- *	Input:
- *		ndv:							number of optimization variables
- *		nobj:							number of objectives
- *		ncon:							number of constraints
- *		x:								current optimization value
- *		obj:							current objective function value
- *		g:								current constraint function value
- *		df:								gradient of current objective function value
- *		dg:								gradient of current constraint function value
- *		iteration_info:					structure with information about iteration function
- *		state:							current solution state of algorithm
- *	Output:
- *		stop:							indicator if optimization should be stopped
- *		exitstatus:						zero in case of success else nonzero
- */
+*	Input:
+*		ndv:							number of optimization variables
+*		nobj:							number of objectives
+*		ncon:							number of constraints
+*		x:								current optimization value
+*		obj:							current objective function value
+*		g:								current constraint function value
+*		df:								gradient of current objective function value
+*		dg:								gradient of current constraint function value
+*		iteration_info:					structure with information about iteration function
+*		state:							current solution state of algorithm
+*	Output:
+*		stop:							indicator if optimization should be stopped
+*		exitstatus:						zero in case of success else nonzero
+*/
 static int iteration_function_wrapper(const int ndv, const int nobj, const int ncon, const double* x, const double* obj, const double* g, const double* df, const double* dg, const KSOPTIter iteration_info, const KSOPT_ALGORITHM_STATE state, unsigned char* stop);
 
 // Function Prototypes for Linker

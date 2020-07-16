@@ -109,14 +109,14 @@ extern const char *KSOPT_Error_Message[] = {
 
 int ksgeterrormessage(const int id, char* errormessage, const int buffersize) {
 	/*
-	 *KSGETERRORMESSAGE get error message from error id for KSOPT
-	 *	Input:
-	 *		id:				ID of error to convert to message
-	 *		buffersize:		length of string
-	 *	Output:
-	 *		errormessage:	string to copy error message to
-	 *		exitflag:		nonzero in case of failure, zero in case of success
-	 */
+	*KSGETERRORMESSAGE get error message from error id for KSOPT
+	*	Input:
+	*		id:				ID of error to convert to message
+	*		buffersize:		length of string
+	*	Output:
+	*		errormessage:	string to copy error message to
+	*		exitflag:		nonzero in case of failure, zero in case of success
+	*/
 	unsigned int ii = 0;
 	unsigned short int found = 0;
 	char* copyptr = NULL;

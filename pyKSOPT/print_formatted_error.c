@@ -4,14 +4,14 @@
 
 char* print_formatted_error(size_t *buffersize, const char *format, ...) {
 	/*
-	 *PRINT_FORMATTED_ERROR allocate memory for formatted string with variable number of replacements by printf
-	 *	Input:
-	 *		buffersize:		length of formatted text (without terminating \0)
-	 *		format:			format string
-	 *		varargin:		replacements for placeholders
-	 *	Output:
-	 *		buffer:			string containing formatted text
-	 */
+	*PRINT_FORMATTED_ERROR allocate memory for formatted string with variable number of replacements by printf
+	*	Input:
+	*		buffersize:		length of formatted text (without terminating \0)
+	*		format:			format string
+	*		varargin:		replacements for placeholders
+	*	Output:
+	*		buffer:			string containing formatted text
+	*/
 	char *buffer = NULL;
 	*buffersize = 0;
 	{// WORKAROUND: Visual Studio 2012 does not like va_list args; in the parent scope and crashes with error C2275

@@ -14,14 +14,14 @@
 
 int ksopt_get_nargout(const mxArray* functionhandle, const KSOPT_functionType type, int *nargout) {
 	/*
-	 *KSOPT_GET_NARGOUT get number of output arguments of a matlab function handle
-	 *	Input:
-	 *		functionhandle:	function handle to get number of output arguments for
-	 *		type:			type of function the function handle should be used for (objective function, constraint function, iteration function)
-	 *	Output:
-	 *		nargout:		number of output arguments of the function handle
-	 *		exitflag:		zero in case of success else nonzero
-	 */
+	*KSOPT_GET_NARGOUT get number of output arguments of a matlab function handle
+	*	Input:
+	*		functionhandle:	function handle to get number of output arguments for
+	*		type:			type of function the function handle should be used for (objective function, constraint function, iteration function)
+	*	Output:
+	*		nargout:		number of output arguments of the function handle
+	*		exitflag:		zero in case of success else nonzero
+	*/
 	int success = 0, ii = 0;
 	mxArray *narginargsin[1], *narginargsout[1];
 	if (functionhandle == NULL || mxIsEmpty(functionhandle)) {

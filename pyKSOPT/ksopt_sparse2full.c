@@ -5,16 +5,16 @@
 
 int ksopt_sparse2full(const mxArray *sparse, double *full, const size_t m, const size_t n, const boolean_T throwerror) {
 	/*
-	 *KSOPT_SPARSE2FULL convert sparse matrix in matlab format to full matrix
-	 *	Input:
-	 *		sparse:		mxArray with sparse matrix to convert
-	 *		m:			number of rows of matrix
-	 *		n:			number of columns of matrix
-	 *		throwerror:	indicator if matlab errors should be thrown with mexErrMsgIdAndTxt or only a nonzero exit value should be returned
-	 *	Output:
-	 *		full:		double matrix with content of supplied sparse matrix
-	 *		exitflag:	nonzero number in case of error, zero in case of success
-	 */
+	*KSOPT_SPARSE2FULL convert sparse matrix in matlab format to full matrix
+	*	Input:
+	*		sparse:		mxArray with sparse matrix to convert
+	*		m:			number of rows of matrix
+	*		n:			number of columns of matrix
+	*		throwerror:	indicator if matlab errors should be thrown with mexErrMsgIdAndTxt or only a nonzero exit value should be returned
+	*	Output:
+	*		full:		double matrix with content of supplied sparse matrix
+	*		exitflag:	nonzero number in case of error, zero in case of success
+	*/
 	int ii = 0, jj = 0, kk = 0;
 	double *numericSparseDouble = NULL;
 	mwIndex *numericSparseJC = NULL, *numericSparseIR = NULL;
