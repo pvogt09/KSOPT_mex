@@ -3,24 +3,66 @@
 # top-most EditorConfig file
 root = true
 
-[*]
+# patch files
+[*.patch]
+insert_final_newline = unset
+indent_style = unset
+indent_size = unset
+tab_width = unset
+trim_trailing_whitespace = unset
+
+# git files
+[*.{gitignore,gitattributes,gitmodules}]
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# shell scripts unix
+[*.sh]
+end_of_line = lf
+insert_final_newline = true
+
+# shell scripts windows
+[*.bat]
+end_of_line = crlf
+insert_final_newline = false
+charset = latin1
+
+# YAML files
+[*.{package.json,yml,yaml,yamllint}]
+indent_style = space
+indent_size = 2
+tab_width = 2
+insert_final_newline = true
+
+# Matlab files
+[*.m]
 insert_final_newline = false
 indent_style = tab
 indent_size = tab
 tab_width = 4
-charset = utf-8
+charset = unset
 trim_trailing_whitespace = true
 
-# Matches multiple files with brace expansion notation
-# Set default charset
-[*.{m}]
-charset = latin1
-
-[*.{sh}]
-end_of_line = lf
-insert_final_newline = true
-
-[*.{bat}]
-end_of_line = crlf
+# C files
+[*.{c,cpp,h,hpp}]
 insert_final_newline = false
-charset = latin1
+indent_style = tab
+indent_size = tab
+tab_width = 4
+charset = unset
+trim_trailing_whitespace = true
+
+# external C files
+[pyKSOPT/libf2c/**/*.{c,cpp,h,hpp}]
+insert_final_newline = unset
+indent_style = unset
+indent_size = unset
+tab_width = unset
+charset = unset
+trim_trailing_whitespace = unset
+
+# external batch files
+[pyKSOPT/libf2c/**/*.bat]
+end_of_line = unset
+insert_final_newline = unset
+charset = unset
