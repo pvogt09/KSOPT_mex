@@ -61,8 +61,21 @@ tab_width = unset
 charset = unset
 trim_trailing_whitespace = unset
 
+[pyKSOPT/build/**/*.{c,cpp,h,hpp}]
+insert_final_newline = unset
+indent_style = unset
+indent_size = unset
+tab_width = unset
+charset = unset
+trim_trailing_whitespace = unset
+
 # external batch files
 [pyKSOPT/libf2c/**/*.bat]
+end_of_line = unset
+insert_final_newline = unset
+charset = unset
+
+[pyKSOPT/build/**/*.bat]
 end_of_line = unset
 insert_final_newline = unset
 charset = unset
