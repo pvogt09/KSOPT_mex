@@ -1,0 +1,24 @@
+name: Linting
+on:
+  [push, pull_request]
+
+jobs:
+  build:
+    name: Linting
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: YAML Lint
+        uses: bewuethr/yamllint-action@v1
+        with:
+          file_or_dir: .
+          config-file: .github/workflows/linters.yamllint
+      - name: shellcheck
+        uses: ludeeus/action-shellcheck@0.3.0
+        env:
+          SHELLCHECK_OPTS: -e SC2181 -e SC2039 -e SC2162 -e SC1091
+      - name: EditorConfig
+        env:
+          EC_FIX_ERROR: false
+          ALWAYS_LINT_ALL_FILES: false
+        uses: zbeekman/EditorConfig-Action@master
