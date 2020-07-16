@@ -28,10 +28,10 @@ function [success, fileinfo] = ksopt(overwrite, nobuild)
 		success = true;
 		return;
 	end
-	
+
 	f2clib_dir = realpath(fullfile(compile.destpath(), 'pyKSOPT', 'libf2c'));
 
-    config = compile.constant();
+	config = compile.constant();
 	if strcmpi(config.TargetLang, 'C++')
 		makeC = true;
 	else

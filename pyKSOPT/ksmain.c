@@ -69,22 +69,22 @@ static iteration_function *ITER_FUN = ((iteration_function*)NULL);
 static unsigned char HAS_ITER_FUN = false;
 int ksmain(const integer ndv, const integer nobj, const integer ncon, doublereal* x, const doublereal* xlb, const doublereal* xub, const KSOPToptionType options, integer* nfeval, integer* ngeval, objective_function objfun, gradient_function gradfun, KSOPTResult* result) {
 	/*KSMAIN main function for optimization with KSOPT
-	 *	Input:
-	 *		ndv:							number of optimization variables
-	 *		nobj:							number of objectives
-	 *		ncon:							number of constraints
-	 *		x:								initial optimization value
-	 *		xlb:							vector of lower bounds for optimization variables
-	 *		xub:							vector of upper bounds for optimization variables
-	 *		options:						structure with options for optimization
-	 *	Output:
-	 *		nfeval:							number of function evaluations
-	 *		ngeval:							number of gradient evaluations
-	 *		objfun:							function pointer to objective and constraint function
-	 *		gradfun:						function pointer to gradient objective and constraint function
-	 *		result:							structure with information about optimization run
-	 *		exitstatus:						zero in case of success else nonzero
-	 */
+	*	Input:
+	*		ndv:							number of optimization variables
+	*		nobj:							number of objectives
+	*		ncon:							number of constraints
+	*		x:								initial optimization value
+	*		xlb:							vector of lower bounds for optimization variables
+	*		xub:							vector of upper bounds for optimization variables
+	*		options:						structure with options for optimization
+	*	Output:
+	*		nfeval:							number of function evaluations
+	*		ngeval:							number of gradient evaluations
+	*		objfun:							function pointer to objective and constraint function
+	*		gradfun:						function pointer to gradient objective and constraint function
+	*		result:							structure with information about optimization run
+	*		exitstatus:						zero in case of success else nonzero
+	*/
 	// variable definitions for internal pointers
 	integer *NDV = NULL, *NOBJ = NULL, *NCON = NULL, *NSIDE = NULL, *NSCALE = NULL, *ITMAX = NULL, *IGRAD = NULL, *ISDRST = NULL, *IPRNT = NULL;
 	doublereal *RDFUN = NULL, *ADFUN = NULL, *FDELT = NULL, *FDMIN = NULL, *RHOMIN = NULL, *RHOMAX = NULL, *RHODEL = NULL;
@@ -113,7 +113,7 @@ int ksmain(const integer ndv, const integer nobj, const integer ncon, doublereal
 	doublereal *LB = NULL;
 	doublereal *UB = NULL;
 	doublereal *XOPT = NULL;
-	
+
 	//unsigned short int displayprogress = options.print > 0;
 	integer iprnt = 0;
 	integer iout = 0;
@@ -553,61 +553,61 @@ static int ITERFUN(const integer* ndv, const integer* nobj, const integer* ncon,
 }
 /*
 C
-C  OPTIMIZE 
+C  OPTIMIZE
 C
-      ISEL=-1
+	ISEL=-1
 10    CONTINUE
-      CALL KSOPT(ISEL,X,OBJ,G,DF,DG,NOMAX,NGMAX,WORK)
-      IF (ISEL.EQ.0) GO TO 50
-      IF (ISEL.EQ.1) GO TO 20
-      IF (ISEL.EQ.2) GO TO 30
+	CALL KSOPT(ISEL,X,OBJ,G,DF,DG,NOMAX,NGMAX,WORK)
+	IF (ISEL.EQ.0) GO TO 50
+	IF (ISEL.EQ.1) GO TO 20
+	IF (ISEL.EQ.2) GO TO 30
 C
 C  EVALUATE OBJECTIVE AND CONSTRAINTS
 C
 20    CONTINUE
-      CALL OBJFUN(NDV,NOBJ,NCON,X,OBJ,G)
-      NFEVAL=NFEVAL+1
-      GO TO 10
+	CALL OBJFUN(NDV,NOBJ,NCON,X,OBJ,G)
+	NFEVAL=NFEVAL+1
+	GO TO 10
 C
 C  EVALUATE GRADIENTS
 C
 30    CONTINUE
-      CALL GRDFUN(NDV,NOBJ,NCON,X,OBJ,G,DF,DG)
-      NGEVAL=NGEVAL+1
-      GO TO 10
+	CALL GRDFUN(NDV,NOBJ,NCON,X,OBJ,G,DF,DG)
+	NGEVAL=NGEVAL+1
+	GO TO 10
 C
 50    CONTINUE
 C
-C  PRINT FINAL RESULTS 
+C  PRINT FINAL RESULTS
 C
-      IF (IPRINT.EQ.0) GO TO 60
-      WRITE(IOUT,1650) NFEVAL
-      WRITE(IOUT,1750) NGEVAL
+	IF (IPRINT.EQ.0) GO TO 60
+	WRITE(IOUT,1650) NFEVAL
+	WRITE(IOUT,1750) NGEVAL
 60    CONTINUE
 C
-      RETURN
+	RETURN
 C  ------------------------------------------------------------------
 C  FORMATS
 C  ------------------------------------------------------------------
 1650  FORMAT(//8X,'NUMBER OF FUNC-CALLS:  NFUN =',I5)
 1750  FORMAT(/8X,'NUMBER OF GRAD-CALLS:  NGRD =',I5)
 C
-      END
-	  */
+	END
+	*/
 
 static int checkOptions(const KSOPToptionType options, const int ndv) {
 	int ii = 0, print = 0;
 	/*// maximum number of iterations
-    int_T maxiter;
+	int_T maxiter;
 	// RHOMIN -- minimum multiplier for ks function (default is 5.0)
-    real_T rhomin;
+	real_T rhomin;
 	// RHOMAX -- maximum multiplier for ks function (default is 100.0)
-    real_T rhomax;
+	real_T rhomax;
 	// RHODEL -- increment for rho (default is computed internally)
 	real_T rhodel;
 	int_T print;
 	// NSCALE-- flag selecting design variable scaling
-	//		=0 -- no scaling 
+	//		=0 -- no scaling
 	//		<0 -- user supplied scaling in vector scale
 	//		>0 -- automatic scaling by ksopt every NSCALE iterations
 	int_T scale;
@@ -621,7 +621,7 @@ static int checkOptions(const KSOPToptionType options, const int ndv) {
 	real_T findiffstepsize;
 	// FDMIN -- minimum difference for computing finite differences (default is 0.0001)
 	real_T findiffstepsizemin;*/
-	
+
 	/*if (options == NULL) {
 		mexErrMsgIdAndTxt("KSOPT:input", "Options must not be empty.");
 		return 1;

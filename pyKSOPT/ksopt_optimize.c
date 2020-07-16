@@ -41,10 +41,10 @@
 #define MAXRHS 2 /* max nrhs for user function */
 //Iteration callback structure
 /*typedef struct {
-    char f[FLEN];
-    mxArray *plhs[1];
-    mxArray *prhs[3];
-    bool enabled;
+	char f[FLEN];
+	mxArray *plhs[1];
+	mxArray *prhs[3];
+	bool enabled;
 } iter_fun_data;*/
 
 //User Structures
@@ -109,7 +109,7 @@ static void printSolverInfo(void);
  *		number_constraints_linear_ineq:	number of linear inequality constraints
  *		number_constraints_linear_eq:	number of linear equality constraints
  *		iterinfoplot:					structure with information about iteration function
- *		iterinfooutputoptions:			structure with information about out´put function
+ *		iterinfooutputoptions:			structure with information about output function
  */
 static void checkInputs(const mxArray *prhs[], const int nrhs, KSOPToptionType *options, KSOPT_functionHandleInformation *objectiveinformation, KSOPT_functionHandleInformation *constraintinformation, size_t *number_objectives, size_t *number_constraints_ineq, size_t *number_constraints_eq, size_t *number_constraints_linear_ineq, size_t *number_constraints_linear_eq, KSOPT_iterfunctionHandleInformation *iterinfoplot, KSOPT_iterfunctionHandleInformation *iterinfooutput);
 /*CHECKIDENTX check if two vectors are the same to handle case when objective and constraints are called with the same input argument for gradient information
@@ -305,11 +305,11 @@ static const char *iterfunSTATES[] = {
 
 //Ctrl-C Detection
 #ifdef __cplusplus
-    extern "C" bool utIsInterruptPending(void);
-    extern "C" void utSetInterruptPending(bool);
+	extern "C" bool utIsInterruptPending(void);
+	extern "C" void utSetInterruptPending(bool);
 #else
-    extern bool utIsInterruptPending(void);
-    extern void utSetInterruptPending(bool);
+	extern bool utIsInterruptPending(void);
+	extern void utSetInterruptPending(bool);
 #endif
 
 //Global X, C, J for avoiding multiple constraint and jacobian evaluations
@@ -1042,7 +1042,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]) {
 		mexPrintf(" # Decision Variables:     %4d\n", number_variables);
 		mexPrintf(" # Objectives:             %4d\n", number_objectives);
 		mexPrintf(" # Inequality Constraints: %4d\n", constraintinformation.number_constraints_ineq + number_constraints_linear_ineq);
-        mexPrintf(" # Equality Constraints:   %4d\n", constraintinformation.number_constraints_eq + number_constraints_linear_eq);
+		mexPrintf(" # Equality Constraints:   %4d\n", constraintinformation.number_constraints_eq + number_constraints_linear_eq);
 
 		mexPrintf("------------------------------------------------------------------\n");
 		mexEvalString("drawnow;");
@@ -1393,16 +1393,16 @@ catch (...) {
 	}
 static int objective_function_wrapper(const int ndv, const int nobj, const int ncon, const double* x, double* obj, double* g) {
 	/*GRADIENT_FUNCTION_WRAPPER wrapper for call to gradient function from within KSOPT
-	 *	Input:
-	 *		ndv:							number of optimization variables
-	 *		nobj:							number of objectives
-	 *		ncon:							number of constraints
-	 *		x:								current optimization value
-	 *	Output:
-	 *		obj:							current objective function value
-	 *		g:								current constraint function value
-	 *		exitstatus:						zero in case of success else nonzero
-	 */
+	*	Input:
+	*		ndv:							number of optimization variables
+	*		nobj:							number of objectives
+	*		ncon:							number of constraints
+	*		x:								current optimization value
+	*	Output:
+	*		obj:							current objective function value
+	*		g:								current constraint function value
+	*		exitstatus:						zero in case of success else nonzero
+	*/
 	double accum = 0.0;
 	double *objective = NULL;
 	double *constraint = NULL;
@@ -2102,18 +2102,18 @@ static int objective_function_wrapper(const int ndv, const int nobj, const int n
 
 static int gradient_function_wrapper(const int ndv, const int nobj, const int ncon, const double* x, double* obj, double* g, double* df, double* dg) {
 	/*GRADIENT_FUNCTION_WRAPPER wrapper for call to gradient function from within KSOPT
-	 *	Input:
-	 *		ndv:							number of optimization variables
-	 *		nobj:							number of objectives
-	 *		ncon:							number of constraints
-	 *		x:								current optimization value
-	 *	Output:
-	 *		obj:							current objective function value
-	 *		g:								current constraint function value
-	 *		df:								gradient of current objective function value
-	 *		dg:								gradient of current constraint function value
-	 *		exitstatus:						zero in case of success else nonzero
-	 */
+	*	Input:
+	*		ndv:							number of optimization variables
+	*		nobj:							number of objectives
+	*		ncon:							number of constraints
+	*		x:								current optimization value
+	*	Output:
+	*		obj:							current objective function value
+	*		g:								current constraint function value
+	*		df:								gradient of current objective function value
+	*		dg:								gradient of current constraint function value
+	*		exitstatus:						zero in case of success else nonzero
+	*/
 	boolean_T needsgradient = false;
 	void *memoryptr = NULL;
 	unsigned int number_variables, number_objectives, number_constraints;
@@ -2243,21 +2243,21 @@ static int gradient_function_wrapper(const int ndv, const int nobj, const int nc
 
 static int iteration_function_wrapper(const int ndv, const int nobj, const int ncon, const double* x, const double* obj, const double* g, const double* df, const double* dg, const KSOPTIter iteration_info, const KSOPT_ALGORITHM_STATE state, unsigned char* stop) {
 	/*ITERATION_FUNCTION_WRAPPER wrapper for call to iteration function from within KSOPT
-	 *	Input:
-	 *		ndv:							number of optimization variables
-	 *		nobj:							number of objectives
-	 *		ncon:							number of constraints
-	 *		x:								current optimization value
-	 *		obj:							current objective function value
-	 *		g:								current constraint function value
-	 *		df:								gradient of current objective function value
-	 *		dg:								gradient of current constraint function value
-	 *		iteration_info:					structure with information about iteration function
-	 *		state:							current solution state of algorithm
-	 *	Output:
-	 *		stop:							indicator if optimization should be stopped
-	 *		exitstatus:						zero in case of success else nonzero
-	 */
+	*	Input:
+	*		ndv:							number of optimization variables
+	*		nobj:							number of objectives
+	*		ncon:							number of constraints
+	*		x:								current optimization value
+	*		obj:							current objective function value
+	*		g:								current constraint function value
+	*		df:								gradient of current objective function value
+	*		dg:								gradient of current constraint function value
+	*		iteration_info:					structure with information about iteration function
+	*		state:							current solution state of algorithm
+	*	Output:
+	*		stop:							indicator if optimization should be stopped
+	*		exitstatus:						zero in case of success else nonzero
+	*/
 	mxArray *iter_fun_plhs[1] = {NULL};
 	mxArray *iter_fun_prhs[4] = {NULL, NULL, NULL, NULL};
 	mxArray *exception = NULL;
@@ -2525,21 +2525,21 @@ static int iteration_function_wrapper(const int ndv, const int nobj, const int n
 
 static void checkInputs(const mxArray *prhs[], const int nrhs, KSOPToptionType *options, KSOPT_functionHandleInformation *objectiveinformation, KSOPT_functionHandleInformation *constraintinformation, size_t *number_objectives, size_t *number_constraints_ineq, size_t *number_constraints_eq, size_t *number_constraints_linear_ineq, size_t *number_constraints_linear_eq, KSOPT_iterfunctionHandleInformation *iterinfoplot, KSOPT_iterfunctionHandleInformation *iterinfooutput) {
 	/*CHECKINPUTS check input arguments supplied in matlab
-	 *	Input:
-	 *		prhs:							array with mxArrays supplied by user in matlab
-	 *		nrhs:							number of supplied arguments in matlab
-	 *	Output:
-	 *		options:						structure with options for optimization with KSOPT
-	 *		objectiveinformation:			structure with inforamtion about objective function
-	 *		constraintinformation:			structure with information about constraint function
-	 *		number_objectives:				number of objective functions
-	 *		number_constraints_ineq:		number of inequality constraints
-	 *		number_constraints_eq:			number of equality constraints
-	 *		number_constraints_linear_ineq:	number of linear inequality constraints
-	 *		number_constraints_linear_eq:	number of linear equality constraints
-	 *		iterinfoplot:					structure with information about iteration function
-	 *		iterinfooutputoptions:			structure with information about out´put function
-	 */
+	*	Input:
+	*		prhs:							array with mxArrays supplied by user in matlab
+	*		nrhs:							number of supplied arguments in matlab
+	*	Output:
+	*		options:						structure with options for optimization with KSOPT
+	*		objectiveinformation:			structure with inforamtion about objective function
+	*		constraintinformation:			structure with information about constraint function
+	*		number_objectives:				number of objective functions
+	*		number_constraints_ineq:		number of inequality constraints
+	*		number_constraints_eq:			number of equality constraints
+	*		number_constraints_linear_ineq:	number of linear inequality constraints
+	*		number_constraints_linear_eq:	number of linear equality constraints
+	*		iterinfoplot:					structure with information about iteration function
+	*		iterinfooutputoptions:			structure with information about outï¿½put function
+	*/
 	int success = 1;
 	double* temp = NULL;
 	int ii, number_fields;
@@ -4022,13 +4022,13 @@ static void checkInputs(const mxArray *prhs[], const int nrhs, KSOPToptionType *
 
 static bool checkIdentX(const double *x, const double *X, const int n) {
 	/*CHECKIDENTX check if two vectors are the same to handle case when objective and constraints are called with the same input argument for gradient information
-	 *	Input:
-	 *		x:	first vector to check
-	 *		X:	second vector to check
-	 *		n:	number of elements
-	 *	Output:
-	 *		true if vectors are the same else false
-	 */
+	*	Input:
+	*		x:	first vector to check
+	*		X:	second vector to check
+	*		n:	number of elements
+	*	Output:
+	*		true if vectors are the same else false
+	*/
 	int ii = 0;
 	if (n <= 0) {
 		return false;
@@ -4047,16 +4047,16 @@ static bool checkIdentX(const double *x, const double *X, const int n) {
 
 static void clearVariables(KSOPToptionType *options, KSOPT_iterfunctionHandleInformation *iterinformationplot, KSOPT_iterfunctionHandleInformation *iterinformationoutput, const size_t number_objectives, const size_t number_constraints_ineq, const size_t number_constraints_eq, const size_t number_constraints_linear_ineq, const size_t number_constraints_linear_eq) {
 	/*CLEARVARIABLES free memory allocated in structures with information about problem structure
-	 *	Input:
-	 *		options:						structure with options
-	 *		iterinformationplot:			structure with information about plotfunction
-	 *		iterinformationoutput:			structure with information about outputfunction
-	 *		number_objectives:				number of objectives
-	 *		number_constraints_ineq:		number of inequality constraints
-	 *		number_constraints_eq:			number of equality constraints
-	 *		number_constraints_linear_ineq:	number of linear inequality constraints
-	 *		number_constraints_linear_eq:	number of linear equality constraints
-	 */
+	*	Input:
+	*		options:						structure with options
+	*		iterinformationplot:			structure with information about plotfunction
+	*		iterinformationoutput:			structure with information about outputfunction
+	*		number_objectives:				number of objectives
+	*		number_constraints_ineq:		number of inequality constraints
+	*		number_constraints_eq:			number of equality constraints
+	*		number_constraints_linear_ineq:	number of linear inequality constraints
+	*		number_constraints_linear_eq:	number of linear equality constraints
+	*/
 	if (options != NULL && options->scalefactor != NULL) {
 		mxFree(options->scalefactor);
 		options->scalefactor = NULL;
@@ -4135,10 +4135,10 @@ static void clearVariables(KSOPToptionType *options, KSOPT_iterfunctionHandleInf
 
 //Print Solver Information
 static void printSolverInfo(void) {
-    mexPrintf("\n-----------------------------------------------------------\n");
-    mexPrintf(" KSOPT: Nonlinear Optimization [v%s]\n", PACKAGE_VERSION);
-    mexPrintf("  - Released under the GNU Lesser General Public License: http://www.gnu.org/copyleft/lesser.html\n");
-    mexPrintf("  - Source available from: http://github.com/pvogt09/KSOPT_mex\n");
-    mexPrintf("\n MEX Interface Patrick Vogt 2020\n");
-    mexPrintf("-----------------------------------------------------------\n");
+	mexPrintf("\n-----------------------------------------------------------\n");
+	mexPrintf(" KSOPT: Nonlinear Optimization [v%s]\n", PACKAGE_VERSION);
+	mexPrintf("  - Released under the GNU Lesser General Public License: http://www.gnu.org/copyleft/lesser.html\n");
+	mexPrintf("  - Source available from: http://github.com/pvogt09/KSOPT_mex\n");
+	mexPrintf("\n MEX Interface Patrick Vogt 2020\n");
+	mexPrintf("-----------------------------------------------------------\n");
 }

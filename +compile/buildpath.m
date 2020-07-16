@@ -1,5 +1,5 @@
 function [path] = buildpath()
-	%BUILDPATH Pfad, in dem die Codegenerierung stattfinden soll, zurückgeben
+	%BUILDPATH Pfad, in dem die Codegenerierung stattfinden soll, zurÃ¼ckgeben
 	%	Output:
 	%		path:	Pfad der Codegenerierung
 	path = realpath(fullfile(mfilename('fullpath'), '..', '..', 'codegen'));

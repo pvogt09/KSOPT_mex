@@ -1,6 +1,6 @@
 // types of functions that are used
 #ifdef __cplusplus
-    extern "C" {
+	extern "C" {
 #endif
 typedef enum {
 	// objective function type
@@ -130,5 +130,5 @@ extern int ksopt_get_nargout(const mxArray *functionhandle, const KSOPT_function
  */
 extern char* print_formatted_error(size_t *buffersize, const char *format, ...);
 #ifdef __cplusplus
-    }
+	}
 #endif

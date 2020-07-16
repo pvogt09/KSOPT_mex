@@ -2,7 +2,7 @@
 
 #define HUGE_VAL 1E30
 #ifdef __cplusplus
-    extern "C" {
+	extern "C" {
 #endif
 extern int closeunit_(integer *unitnum);
 extern int grdfun_(integer *ndv, integer *nobj, integer *ncon, doublereal *x, doublereal *obj, doublereal *g, doublereal *df, doublereal *dg);
@@ -84,7 +84,7 @@ typedef struct {
 	int funccount;
 	// Function value at current point. Final value equals optimization function output fval.
 	//double fval;
-	// Current gradient of objective function — either analytic gradient if you provide it or finite-differencing approximation. Final value equals optimization function output grad.
+	// Current gradient of objective function ï¿½ either analytic gradient if you provide it or finite-differencing approximation. Final value equals optimization function output grad.
 	//double gradient;
 	// Iteration number - starts at 0. Final value equals optimization function output output.iterations.
 	int iteration;
@@ -111,18 +111,18 @@ typedef int (iteration_function(const int, const int, const int, const double*, 
 
 typedef struct {
 	// maximum number of iterations
-    int maxiter;
+	int maxiter;
 	// maximum number of function evaluations
-    int maxfunevals;
+	int maxfunevals;
 	// RHOMIN -- minimum multiplier for ks function (default is 5.0)
-    double rhomin;
+	double rhomin;
 	// RHOMAX -- maximum multiplier for ks function (default is 100.0)
-    double rhomax;
+	double rhomax;
 	// RHODEL -- increment for rho (default is computed internally)
 	double rhodel;
 	int print;
 	// NSCALE-- flag selecting design variable scaling
-	//		=0 -- no scaling 
+	//		=0 -- no scaling
 	//		<0 -- user supplied scaling in vector scale
 	//		>0 -- automatic scaling by ksopt every NSCALE iterations
 	int scale;
@@ -209,5 +209,5 @@ extern const char *KSOPT_Error_Message[];
 
 #endif
 #ifdef __cplusplus
-    }
+	}
 #endif
