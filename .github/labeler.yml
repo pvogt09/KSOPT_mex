@@ -9,4 +9,4 @@ Feature:build:
   - +compile/**/*
   - pyKSOPT/build/*
   - pyKSOPT/build/**/*
-  - **/make.bat
+  - /**/make.bat
