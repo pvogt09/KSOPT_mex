@@ -1,0 +1,12 @@
+Feature:Documentation:
+  - docs/**/*
+  - README.md
+Feature:libf2c:
+  - pyKSOPT/libf2c/**/*
+  - pyKSOPT/libf2c/**/*
+Feature:build:
+  - +compile/*
+  - +compile/**/*
+  - pyKSOPT/build/*
+  - pyKSOPT/build/**/*
+  - **/make.bat
