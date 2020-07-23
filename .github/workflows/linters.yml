@@ -17,6 +17,7 @@ jobs:
         uses: ludeeus/action-shellcheck@0.3.0
         env:
           SHELLCHECK_OPTS: -e SC2181 -e SC2039 -e SC2162 -e SC1091
+        ignore: pyKSOPT/src
       - name: EditorConfig
         env:
           EC_FIX_ERROR: false
