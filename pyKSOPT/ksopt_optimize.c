@@ -27,8 +27,12 @@
 #include <exception>
 #endif
 //#pragma comment(lib, "C:\\Program Files\\MATLAB\\R2015B\\extern\\lib\\win64\\microsoft\\libut.lib")
-#if defined DEBUG_FLAG
+#if defined DEBUG_FLAG && defined _MSC_VER
 	#include <crtdbg.h>
+#endif
+
+#if defined __linux__
+	#define strcmpi strcasecmp
 #endif
 
 #include "ksopt.h"
@@ -394,7 +398,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]) {
 	char *errormessage = NULL;
 	boolean_T isX0outofbounds = false;
 	KSOPT_OPTIONTYPE_DEFAULT
-	#if defined DEBUG_FLAG
+	#if defined DEBUG_FLAG && defined _MSC_VER
 		_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF | _CRTDBG_CHECK_ALWAYS_DF );
 	#endif
 	/*//User Function Structure

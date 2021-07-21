@@ -2,6 +2,9 @@
 #include <string.h>
 #include "ksopt.h"
 #include "ksopt_mex.h"
+#if defined __linux__
+	#define strcmpi strcasecmp
+#endif
 
 typedef struct {
 	int nargout;// number of output arguments of objective function

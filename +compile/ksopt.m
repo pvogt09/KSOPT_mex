@@ -127,7 +127,11 @@ function [success, fileinfo] = ksopt(overwrite, nobuild)
 					end
 				end
 				cd(realpath(fullfile([file, '.c'], '..', 'build')));
-				[status, cmdout] = system(['make.bat -vspath "', compiler_path, '" -vsver "', compiler_version, '"'], '-echo');
+				if ispc
+					[status, cmdout] = system(['make.bat -vspath "', compiler_path, '" -vsver "', compiler_version, '"'], '-echo');
+				else
+					[status, cmdout] = system('make -f makefile.u', '-echo');
+				end
 				if status ~= 0
 					error('RBABS:compile:ksopt', escape_printf(cmdout));
 				end
@@ -159,29 +163,75 @@ function [success, fileinfo] = ksopt(overwrite, nobuild)
 					end
 				end
 				cd(realpath(fullfile([file, '.c'], '..', 'build')));
-				[status, cmdout] = system(['makef2c.bat -', computer('arch'), ' -vspath "', compiler_path, '" -vsver "', compiler_version, '"'], '-echo');
+				if ispc
+					[status, cmdout] = system(['makef2c.bat -', computer('arch'), ' -vspath "', compiler_path, '" -vsver "', compiler_version, '"'], '-echo');
+				else
+					%[status, cmdout] = system('CFLAGS="$CFLAGS -fPIC" CXXFLAGS="$CXXFLAGS -fPIC" make -f makefile.u', '-echo');
+					%if status ~= 0
+					%	error('RBABS:compile:ksopt', escape_printf(cmdout));
+					%end
+					%[status, cmdout] = system('CFLAGS="$CFLAGS -fPIC" CXXFLAGS="$CXXFLAGS -fPIC" make -f makefile.u clean', '-echo');
+					%if status ~= 0
+					%	error('RBABS:compile:ksopt', escape_printf(cmdout));
+					%end
+					[status, cmdout] = system('CFLAGS="$CFLAGS -fPIC" CXXFLAGS="$CXXFLAGS -fPIC" make -f makefile_shared.u f2c.h signal1.h sysdep1.h libf2c.so libf2c.a', '-echo');
+				end
 				if status ~= 0
 					error('RBABS:compile:ksopt', escape_printf(cmdout));
 				end
 				cd(makePfad);
-				[status, message, messageid] = copyfile(realpath(fullfile([file, '.c'], '..', 'build', 'vcf2c.lib')), fullfile(f2clib_dir, ['vcf2c_', computer('arch'), '.lib']), 'f');
+				if ispc
+					[status, message, messageid] = copyfile(realpath(fullfile([file, '.c'], '..', 'build', 'vcf2c.lib')), fullfile(f2clib_dir, ['vcf2c_', computer('arch'), '.lib']), 'f');
+				else
+					[status, message, messageid] = copyfile(realpath(fullfile([file, '.c'], '..', 'build', 'libf2c.a')), fullfile(f2clib_dir, ['libf2c_', computer('arch'), '.a']), 'f');
+					if ~status
+						error(messageid, message);
+					end
+					[status, message, messageid] = copyfile(realpath(fullfile([file, '.c'], '..', 'build', 'libf2c.a')), fullfile(makePfad, ['libf2c_', computer('arch'), '.a']), 'f');
+					if ~status
+						error(messageid, message);
+					end
+					[status, message, messageid] = copyfile(realpath(fullfile([file, '.c'], '..', 'build', 'libf2c.so')), fullfile(f2clib_dir, ['libf2c_', computer('arch'), '.so']), 'f');
+					if ~status
+						error(messageid, message);
+					end
+					[status, message, messageid] = copyfile(realpath(fullfile([file, '.c'], '..', 'build', 'libf2c.so')), fullfile(makePfad, ['libf2c_', computer('arch'), '.so']), 'f');
+				end
 				if ~status
 					error(messageid, message);
 				end
 			end
 			Args = {
 				'-I.';
+				'-L.';
 				['-I', f2clib_dir, ''];
 				['-L', f2clib_dir];
-				['-lvcf2c_', computer('arch'), '.lib'];
-				%['COMPFLAGS=$COMPFLAGS /MDd']
-				%['-D__cplusplus']
-				['LINKFLAGS=$LINKFLAGS /NODEFAULTLIB:LIBCMT'];
-				['CXXFLAGS=$CXXFLAGS /W3'];
-				['CFLAGS=$CFLAGS /W3'];
-				['COMPFLAGS=$COMPFLAGS /W3'];
-				['-llibut']
 			};
+			if ispc
+				Args = [
+					Args;
+					{
+						%['COMPFLAGS=$COMPFLAGS /MDd']
+						%['-D__cplusplus']
+						['LINKFLAGS=$LINKFLAGS /NODEFAULTLIB:LIBCMT'];
+						['CXXFLAGS=$CXXFLAGS /W3'];
+						['CFLAGS=$CFLAGS /W3'];
+						['COMPFLAGS=$COMPFLAGS /W3'];
+						['-lvcf2c_', computer('arch'), '.lib'];
+						['-llibut']
+					}
+				];
+			else
+				Args = [
+					Args;
+					{
+						['CXXFLAGS=$CXXFLAGS -fPIC'];
+						['CFLAGS=$CFLAGS -fPIC'];
+						['-l:libf2c_', computer('arch'), '.a'];
+						['-lut'];
+					}
+				];
+			end
 			if ~makeC
 				Args = [
 					Args;
