@@ -357,7 +357,7 @@ static int eval_objective(const mxArray *functionhandle, const mxArray *x, const
 				mexErrMsgIdAndTxt("KSOPT:input", "Internal error when checking for gradients.");
 				return 1;
 			}
-			if (strcmpi(identifier, "MATLAB:maxlhs") == 0 || strcmpi(identifier, "MATLAB:TooManyOutputs") == 0 || strcmpi(identifier, "MATLAB:unassignedOutputs") == 0) {
+			if (strcmpi(identifier, "MATLAB:maxlhs") == 0 || strcmpi(identifier, "MATLAB:TooManyOutputs") == 0 || strcmpi(identifier, "MATLAB:unassignedOutputs") == 0 || strcmpi(identifier, "MATLAB:needMoreRhsOutputs") == 0) {
 				if (identifier != NULL) {
 					mxFree(identifier);
 					identifier = NULL;
@@ -432,6 +432,10 @@ static int eval_objective(const mxArray *functionhandle, const mxArray *x, const
 			}
 			else {
 				FREE_CALLMATLABARGSOUTOBJCTIVE(2);
+				if (identifier != NULL) {
+					mxFree(identifier);
+					identifier = NULL;
+				}
 				//Call MATLAB and rethrow exception
 				evalobjectiveargsin[0] = (mxArray*) exception;
 				evalobjectiveargsin[1] = NULL;
@@ -621,7 +625,7 @@ static int eval_constraint(const mxArray *functionhandle, const mxArray *x, cons
 				mexErrMsgIdAndTxt("KSOPT:input", "Internal error when checking for gradients.");
 				return 1;
 			}
-			if (strcmpi(identifier, "MATLAB:maxlhs") == 0 || strcmpi(identifier, "MATLAB:TooManyOutputs") == 0 || strcmpi(identifier, "MATLAB:unassignedOutputs") == 0) {
+			if (strcmpi(identifier, "MATLAB:maxlhs") == 0 || strcmpi(identifier, "MATLAB:TooManyOutputs") == 0 || strcmpi(identifier, "MATLAB:unassignedOutputs") == 0 || strcmpi(identifier, "MATLAB:needMoreRhsOutputs") == 0) {
 				mxFree(identifier);
 				identifier = NULL;
 				maxnargout = 2;
