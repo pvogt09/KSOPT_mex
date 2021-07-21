@@ -7,7 +7,7 @@ if "%VS_INSTALLPATH%" == "" (
 	exit /B 1
 )
 if not exist "%VS_INSTALLPATH%" (
-	echo "Visual Studio installation dierectory does not exist"
+	echo "Visual Studio installation directory does not exist"
 	exit /B 1
 )
 set VCVARSPATH=
