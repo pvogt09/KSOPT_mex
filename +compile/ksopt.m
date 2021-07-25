@@ -31,6 +31,11 @@ function [success, fileinfo] = ksopt(overwrite, nobuild)
 	end
 
 	f2clib_dir = realpath(fullfile(destpath, 'pyKSOPT', 'libf2c'));
+	if ispc
+		libsuffix = 'lib';
+	else
+		libsuffix = 'a';
+	end
 
 	config = compile.constant();
 	if strcmpi(config.TargetLang, 'C++')
@@ -115,8 +120,8 @@ function [success, fileinfo] = ksopt(overwrite, nobuild)
 							fileslibf2c{end + 1, 1} = realpath(fullfile(f2clib_dir, [n, e]));
 							filenameslibf2c{end + 1, 1} = [n, e];
 						else
-							fileslibf2c{end + 1, 1} = realpath(fullfile(f2clib_dir, [n, 'f2c', e]));
-							filenameslibf2c{end + 1, 1} = [n, e];
+							fileslibf2c{end + 1, 1} = realpath(fullfile(f2clib_dir, [n, e]));
+							filenameslibf2c{end + 1, 1} = [n, 'f2c', e];
 						end
 					end
 				end
@@ -126,26 +131,34 @@ function [success, fileinfo] = ksopt(overwrite, nobuild)
 						error(messageid, message);
 					end
 				end
+				[status, message, messageid] = copyfile(fullfile(realpath(fullfile([file, '.c'], '..', 'makefile'))), fullfile(realpath(fullfile([file, '.c'], '..', 'build', 'makefile'))), 'f');
+				if ~status
+					error(messageid, message);
+				end
 				cd(realpath(fullfile([file, '.c'], '..', 'build')));
 				if ispc
 					[status, cmdout] = system(['make.bat -vspath "', compiler_path, '" -vsver "', compiler_version, '"'], '-echo');
 				else
-					[status, cmdout] = system('make -f makefile.u', '-echo');
+					[status, cmdout] = system('make -f makefilef2c.u', '-echo');
+					if status ~= 0
+						error('RBABS:compile:ksopt', escape_printf(cmdout));
+					end
+					[status, cmdout] = system(['MAKE_CFLAGS="-fPIC -I ', [matlabroot, '/extern/include'], '" make -f makefile'], '-echo');
 				end
 				if status ~= 0
 					error('RBABS:compile:ksopt', escape_printf(cmdout));
 				end
 				cd(makePfad);
-				[status, message, messageid] = copyfile(realpath(fullfile([file, '.c'], '..', 'build', 'ksopt.lib')), fullfile(makePfad, ['libksopt.lib']), 'f');
+				[status, message, messageid] = copyfile(realpath(fullfile([file, '.c'], '..', 'build', ['ksopt.', libsuffix])), fullfile(makePfad, ['libksopt.', libsuffix]), 'f');
 				if ~status
 					error(messageid, message);
 				end
-				[status, message, messageid] = copyfile(realpath(fullfile([file, '.c'], '..', 'build', 'vcf2c.lib')), fullfile(f2clib_dir, ['vcf2c_', computer('arch'), '.lib']), 'f');
+				[status, message, messageid] = copyfile(realpath(fullfile([file, '.c'], '..', 'build', ['vcf2c.', libsuffix])), fullfile(f2clib_dir, ['vcf2c_', computer('arch'), '.', libsuffix]), 'f');
 				if ~status
 					error(messageid, message);
 				end
 			end
-			if makeC && ~exist(realpath(fullfile(f2clib_dir, ['vcf2c_', computer('arch'), '.lib'])), 'file')
+			if makeC && ~exist(realpath(fullfile(f2clib_dir, ['vcf2c_', computer('arch'), '.', libsuffix])), 'file')
 				directory = dir(realpath(fullfile(f2clib_dir)));
 				fileslibf2c = cell(0, 1);
 				filenameslibf2c = cell(0, 1);
@@ -237,7 +250,7 @@ function [success, fileinfo] = ksopt(overwrite, nobuild)
 					Args;
 					{
 						['-L.'];
-						['-llibksopt.lib']
+						['-llibksopt.', libsuffix]
 					};
 				];
 			end
